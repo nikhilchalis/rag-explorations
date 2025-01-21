@@ -19,11 +19,11 @@ def main():
     if args.reset:
         print("✨ Clearing Database")
         clear_database()
-
-    # Create (or update) the data store.
-    documents = load_documents()
-    chunks = split_documents(documents)
-    add_to_chroma(chunks)
+    else:
+        # Create (or update) the data store.
+        documents = load_documents()
+        chunks = split_documents(documents)
+        add_to_chroma(chunks)
 
 
 def load_documents():
@@ -65,7 +65,7 @@ def add_to_chroma(chunks: list[Document]):
         print(f"👉 Adding new documents: {len(new_chunks)}")
         new_chunk_ids = [chunk.metadata["id"] for chunk in new_chunks]
         db.add_documents(new_chunks, ids=new_chunk_ids)
-        db.persist()
+        # db.persist() not needed with langchain_chroma
     else:
         print("✅ No new documents to add")
 
