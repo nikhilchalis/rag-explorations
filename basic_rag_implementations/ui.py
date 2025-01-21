@@ -4,7 +4,7 @@ from rich.panel import Panel
 
 console = Console()
 
-console.print(Panel("Welcome to the terminal UI! Type 'exit' to quit.", title="Terminal"))
+console.print(Panel("Welcome! Type 'help' for more info, or 'init' to start", title="RAG Terminal"))
 
 while True:
     # Get user input
@@ -28,25 +28,32 @@ while True:
     elif user_input.lower() == "init":
         try:
             # Open a new PowerShell window and run Ollama serve
-            console.print("[bold green]> [bold green]", end='')
-            console.print("Starting Ollama Server")
+            console.print("[bold green]> [/bold green]", end='')
+            console.print("Starting Ollama Server... ", end='')
             subprocess.Popen(
                 ["start", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "-NoExit", "-Command", "ollama serve"],
                 shell=True
             )
-            console.print("[bold green]> [bold green]", end='')
-            console.print("Started Ollama Server")
+            console.print("Done")
 
-            console.print("[bold green]> [bold green]", end='')
-            console.print("Starting Vector Database")
+            console.print("[bold green]> [/bold green]", end='')
+            console.print("Starting Vector Database... ")
             result = subprocess.run(
                 ["python", "populate_database.py"],
                 capture_output=False,
-                text=False
+                text=True
             )
+            console.print("[bold green]> [/bold green]", end='')
+            console.print("Done")
 
         except Exception as e:
-            console.print(f"[bold red]There was an issue: {e}[/bold red]") 
+            console.print(f"[bold red]There was an issue: {e}[/bold red]")
+
+    elif user_input.lower() == 'help':
+        console.print("Here are a list of commands:")
+        console.print("[bold]init:[/bold] Starts the server and populates your database")
+        console.print("[bold]exit:[/bold] Stops all processes and exits - however does not kill the server")
+        console.print("[bold]ask:[/bold] everything after this keyword will be sent to the RAG system")
 
     elif user_input.lower().startswith("ask"):
         # Extract arguments (everything after 'ask')
@@ -57,8 +64,8 @@ while True:
         arguments = parts[1].strip('"')  # Remove surrounding quotes if present
 
         # console.print(f"[bold blue]Executing: python query_data.py \"{arguments}\"[/bold blue]")
-        console.print("[bold green]> [bold green]", end='')
-        console.print("[bold]Processing...")
+        console.print("[bold green]> [/bold green]", end='')
+        console.print("[bold white]Processing...")
         try:
             # Run the command with arguments
             result = subprocess.run(
@@ -67,8 +74,8 @@ while True:
                 text=True
             )
             # Print the output
-            console.print("[bold green]Output:[/bold green]")
-            console.print(result.stdout)
+            console.print(Panel(f"[bold green]Output[/bold green]\n{result.stdout}"))
+            #console.print(result.stdout)
 
             if result.stderr:
                 console.print("[bold red]Error:[/bold red]")
