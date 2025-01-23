@@ -1,5 +1,10 @@
 # Basic Rag Implementation
 
+![image](https://github.com/user-attachments/assets/5135767f-db4c-4c72-a944-fbfeef472ae5)
+
+
+![image](https://github.com/user-attachments/assets/12835424-b191-4173-8409-a9c253259ab5)
+
 This was a basic exploration of the simplest possible RAG using Ollama and LangChain (ChromaDB is included in LangChain)
 
 The flow looks like this:
