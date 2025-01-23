@@ -25,7 +25,7 @@ for i, d in enumerate(documents):
 
 
 # an example prompt
-prompt = "Who is the president of the united states?"
+prompt = "What animals are llamas related to?"
 
 # generate an embedding for the prompt and retrieve the most relevant doc
 response = ollama.embeddings(
@@ -40,8 +40,8 @@ data = results['documents'][0][0]
 
 # generate a response combining the prompt and data we retrieved in step 2
 output = ollama.generate(
-  model="tinyllama:latest",
-  prompt=f"Using this data: {data}. Respond to this prompt: {prompt}"
+  model="phi3:mini",
+  prompt=f"Using this data: {data}. Respond to this prompt: {prompt}. Please be concise."
 )
 
 print(output['response'])
