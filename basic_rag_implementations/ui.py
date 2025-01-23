@@ -1,6 +1,7 @@
 import subprocess
 from rich.console import Console
 from rich.panel import Panel
+import time
 
 console = Console()
 
@@ -34,7 +35,9 @@ while True:
                 ["start", "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "-NoExit", "-Command", "ollama serve"],
                 shell=True
             )
+            time.sleep(5)
             console.print("Done")
+            
 
             console.print("[bold green]> [/bold green]", end='')
             console.print("Starting Vector Database... ")

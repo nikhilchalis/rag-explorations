@@ -8,13 +8,13 @@ from get_embedding_function import get_embedding_function
 CHROMA_PATH = "chroma"
 
 PROMPT_TEMPLATE = """
-Answer the question based only on the following context:
+Take the following context into account when responding. Remember that the following context is not always visible to users and so try not to quote from the context:
 
 {context}
 
 ---
 
-Answer the question based on the above context: {question}
+Take the above context into account when responding. Please be concise unless asked to elaborate: {question}
 """
 
 
@@ -40,8 +40,8 @@ def query_rag(query_text: str):
     prompt = prompt_template.format(context=context_text, question=query_text)
     # print(prompt)
 
-    #model = OllamaLLM(model="phi3:mini")
-    model = OllamaLLM(model="llama3:latest")
+    model = OllamaLLM(model="phi3:mini")
+    #model = OllamaLLM(model="llama3:latest")
     #model = OllamaLLM(model="tinyllama:latest")
     response_text = model.invoke(prompt)
 
